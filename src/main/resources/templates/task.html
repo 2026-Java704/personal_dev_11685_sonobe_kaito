@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>タスク</title>
+</head>
+
+<body>
+	<main>
+		<h3>タスク</h3>
+		<form th:action="@{/submit}" th:object="${form}" method="post">
+		  <label>
+		    <input type="radio" th:field="*{selectedOption}" value="option1"/> 全て
+		  </label><br/>
+		  <label>
+		    <input type="radio" th:field="*{selectedOption}" value="option2"/> 日常
+		  </label><br/>
+		  <label>
+		    <input type="radio" th:field="*{selectedOption}" value="option3"/> 仕事
+		  </label><br/>
+		  <button type="submit">ソート</button>
+		</form>
+			<table border="1">
+
+
+			</table>
+			<button>登録</button>
+		</form>
+	</main>
+	<hr>
+</body>
+</html>

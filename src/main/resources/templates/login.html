@@ -2,9 +2,20 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>ログイン</title>
 </head>
 <body>
-
+	<header>
+		<h1>Todoアプリ</h1>
+	</header>
+	<main>
+		<form action="/login" method="post">
+			<input type="text" name="name" placeholder="ユーザー名"><br>
+			<input type="text" name="password" placeholder="パスワード"><br>
+			<button>ログイン</button>
+		</form>
+		<br>
+		<a href="/users/new">新規登録</a>
+	</main>
 </body>
 </html>
