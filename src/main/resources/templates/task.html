@@ -10,24 +10,28 @@
 	<main>
 		<h3>タスク</h3>
 		<form th:action="@{/submit}" th:object="${form}" method="post">
-		  <label>
-		    <input type="radio" th:field="*{selectedOption}" value="option1"/> 全て
-		  </label><br/>
-		  <label>
-		    <input type="radio" th:field="*{selectedOption}" value="option2"/> 日常
-		  </label><br/>
-		  <label>
-		    <input type="radio" th:field="*{selectedOption}" value="option3"/> 仕事
-		  </label><br/>
-		  <button type="submit">ソート</button>
+			<label>
+				<input type="radio" th:field="*{selectedOption}" value="option1" /> 全て
+			</label><br />
+			<label>
+				<input type="radio" th:field="*{selectedOption}" value="option2" /> 日常
+			</label><br />
+			<label>
+				<input type="radio" th:field="*{selectedOption}" value="option3" /> 仕事
+			</label><br />
+			<button type="submit">ソート</button>
 		</form>
-			<table border="1">
+		<table border="1">
+			<tr>
+				<th>タイトル　進捗状況　開始日　期限　メモ　操作</th>
+				
+			</tr>
 
 
-			</table>
-			<button>登録</button>
+		</table>
 		</form>
 	</main>
 	<hr>
 </body>
+
 </html>

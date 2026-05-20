@@ -11,25 +11,25 @@ import jakarta.persistence.Table;
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Integer user_id;
 	private String name;
 	private String password;
-
-	public User() {
-	}
-
-	public User(Integer id, String name) {
-		this.id = id;
-		this.name = name;
-	}
 
 	public User(String name, String password) {
 		this.name = name;
 		this.password = password;
 	}
 
+	public User(Integer id, String name) {
+		this.user_id = id;
+		this.name = name;
+	}
+
+	public User() {
+	}
+
 	public Integer getId() {
-		return id;
+		return user_id;
 	}
 
 	public String getName() {
