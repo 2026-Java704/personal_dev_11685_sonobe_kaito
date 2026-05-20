@@ -9,14 +9,16 @@
 <body>
 	<main>
 		<h3>新規タスク作成</h3>
-		<form action="/task/create" method="post">
-			<table border="1">
-				<tr>
-					<th>カテゴリ</th>
-					<td>
-						<input type="text" name="categoryId">
-					</td>
-				</tr>
+
+		<table border="1">
+			<form>
+				<div>
+					<input type="radio" id="contactChoice1" name="contact" value="work" />
+					<label for="contactChoice1">仕事</label>
+					<input type="radio" id="contactChoice2" name="contact" value="life" />
+					<label for="contactChoice2">日常</label>
+				</div>
+				<form action="/task/create" method="post">
 				<tr>
 					<th>タイトル</th>
 					<td>
@@ -32,7 +34,7 @@
 				<tr>
 					<th>期限</th>
 					<td>
-						<input type="text" name="closing_date">
+						<input type="date" name="closing_date">
 					</td>
 				</tr>
 				<tr>
@@ -48,8 +50,8 @@
 					</td>
 				</tr>
 
-			</table>
-			<button>新規作成</button>
+		</table>
+		<button>新規作成</button>
 		</form>
 	</main>
 	<hr>
