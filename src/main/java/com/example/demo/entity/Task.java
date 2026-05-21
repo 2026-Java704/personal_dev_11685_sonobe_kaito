@@ -8,7 +8,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "tasks")
@@ -23,51 +22,72 @@ public class Task {
 	private Integer categoryId;
 	private String title;
 	private Date date;
-	private Date closing_date;
+	@Column(name = "closing_date")
+	private Date closingDate;
 	private Integer time;
 	private String memo;
-	@Transient
-	private String contact;
+	private Integer progress;
 
 	public Task() {
 	}
 
-	public Task(String contact, String title, Date date, Date closing_date,
+	public Task(Integer categoryId, String title, Date date, Date closingDate,
 			Integer time, String memo) {
-		this.contact = contact;
+		this.categoryId = categoryId;
 		this.title = title;
 		this.date = date;
-		this.closing_date = closing_date;
+		this.closingDate = closingDate;
 		this.time = time;
 		this.memo = memo;
 	}
 
-	public Task(Integer taskId, Integer categoryId, String title, Date date, Date closing_date,
+	public Task(Integer taskId, Integer categoryId, String title, Date date, Date closingDate,
 			Integer time, String memo) {
+		this.taskId = taskId;
+		this.title = title;
+		this.date = date;
+		this.closingDate = closingDate;
+		this.time = time;
+		this.memo = memo;
+		this.categoryId = categoryId;
 
 	}
 
-	public Integer getTask_id() {
+	public Task(Integer taskId, Integer userId, Integer categoryId, String title, Date date, Date closingDate,
+			Integer time, String memo, Integer progress) {
+		this.taskId = taskId;
+		this.title = title;
+		this.date = date;
+		this.closingDate = closingDate;
+		this.time = time;
+		this.memo = memo;
+		this.userId = userId;
+		this.categoryId = categoryId;
+		this.progress = progress;
+
+	}
+
+	public Integer getTaskId() {
 		return taskId;
 	}
 
-	public void setTask_id(Integer taskId) {
+	public void setTaskId(Integer taskId) {
 		this.taskId = taskId;
 	}
 
-	public Integer getUser_id() {
+	public Integer getUserId() {
 		return userId;
 	}
 
-	public void setUser_id(Integer userId) {
+	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
 
-	public Integer getCategory_id() {
+	public Integer getCategoryId() {
 		return categoryId;
 	}
 
-	public void setCategory_id(Integer category_id) {
+	public void setCategoryId(Integer categoryId) {
 		this.categoryId = categoryId;
 	}
 
@@ -87,12 +107,12 @@ public class Task {
 		this.date = date;
 	}
 
-	public Date getClosing_date() {
-		return closing_date;
+	public Date getClosingDate() {
+		return closingDate;
 	}
 
-	public void setClosing_date(Date closing_date) {
-		this.closing_date = closing_date;
+	public void setClosingDate(Date closingDate) {
+		this.closingDate = closingDate;
 	}
 
 	public Integer getTime() {
@@ -111,12 +131,12 @@ public class Task {
 		this.memo = memo;
 	}
 
-	public String getContact() {
-		return contact;
+	public Integer getProgress() {
+		return progress;
 	}
 
-	public void setContact(String contact) {
-		this.contact = contact;
+	public void setProgress(Integer progress) {
+		this.progress = progress;
 	}
 
 }

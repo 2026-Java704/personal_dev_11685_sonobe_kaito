@@ -11,14 +11,15 @@
 		<h3>新規タスク作成</h3>
 
 		<table border="1">
-			<form>
-				<div>
-					<input type="radio" id="contactChoice1" name="contact" value="work" />
+			<form action="/tasks/create" method="post">
+				<tr>
+					<input type="radio" name="categoryId" value="1" />
 					<label for="contactChoice1">仕事</label>
-					<input type="radio" id="contactChoice2" name="contact" value="life" />
+				</tr>
+				<tr>
+					<input type="radio" name="categoryId" value="2" />
 					<label for="contactChoice2">日常</label>
-				</div>
-				<form action="/task/create" method="post">
+				</tr>
 				<tr>
 					<th>タイトル</th>
 					<td>
@@ -34,7 +35,7 @@
 				<tr>
 					<th>期限</th>
 					<td>
-						<input type="date" name="closing_date">
+						<input type="date" name="closingDate">
 					</td>
 				</tr>
 				<tr>
@@ -49,7 +50,6 @@
 						<input type="text" name="memo">
 					</td>
 				</tr>
-
 		</table>
 		<button>新規作成</button>
 		</form>
