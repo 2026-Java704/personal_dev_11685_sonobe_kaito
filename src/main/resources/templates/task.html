@@ -11,19 +11,20 @@
 	<main>
 		<h3>タスク</h3>
 		<form>
+<!--		<form action="/tasks/{id}/edit" method="post">-->
 		<label>
-			<input type="radio" name="category"value="all" /> 全て
+			<input type="radio" name="category"value="all"/> 全て
 		</label><br />
 		<label>
-			<input type="radio"name="category" value="life" /> 日常
+			<input type="radio"name="category" value="life"/> 日常
 		</label><br />
 		<label>
-			<input type="radio"name="category" value="work" /> 仕事
+			<input type="radio"name="category" value="work"/> 仕事
 		</label><br />
 		<div>
 		<button type="submit">ソート</button>
 		</div>
-				</form>
+<!--				</form action="/tasks/{id}/edit" method="post">-->
 		<table border="1">
 			<tr>
 				<th>タイトル　進捗状況　開始日　期限　メモ　操作</th>

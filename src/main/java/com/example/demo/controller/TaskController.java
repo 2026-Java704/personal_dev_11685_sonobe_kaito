@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import java.time.LocalDate;
+import java.sql.Date;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.entity.Task;
 import com.example.demo.model.Account;
-//import com.example.demo.repository.CategoryRepository;
 import com.example.demo.repository.TaskRepository;
 
 @Controller
@@ -51,6 +50,11 @@ public class TaskController {
 	//		return "task";
 	//	}
 
+	@GetMapping("/task")
+	public String index() {
+		return "task";
+	}
+
 	@GetMapping("/tasks/create")
 	public String create() {
 		return "NewTask";
@@ -60,12 +64,28 @@ public class TaskController {
 	public String register(
 			@RequestParam(defaultValue = "") String contact,
 			@RequestParam(defaultValue = "") String title,
-			@RequestParam(defaultValue = "") LocalDate date,
-			@RequestParam(defaultValue = "") LocalDate closing_date,
+			@RequestParam(defaultValue = "") Date date,
+			@RequestParam(defaultValue = "") Date closing_date,
 			@RequestParam(defaultValue = "") Integer time,
 			@RequestParam(defaultValue = "") String memo) {
 
 		Task task = new Task(contact, title, date, closing_date, time, memo);
+		taskRepository.save(task);
+
+		return "task";
+	}
+
+	@PostMapping("/tasks/{id}/edit")
+	public String register(
+			@RequestParam(defaultValue = "") Integer taskId,
+			@RequestParam(defaultValue = "") Integer categoryId,
+			@RequestParam(defaultValue = "") String title,
+			@RequestParam(defaultValue = "") Date date,
+			@RequestParam(defaultValue = "") Date closing_date,
+			@RequestParam(defaultValue = "") Integer time,
+			@RequestParam(defaultValue = "") String memo) {
+
+		Task task = new Task(taskId, categoryId, title, date, closing_date, time, memo);
 		taskRepository.save(task);
 
 		return "task";

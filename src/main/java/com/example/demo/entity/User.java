@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,7 +13,8 @@ import jakarta.persistence.Transient;
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer user_id;
+	@Column(name = "user_id")
+	private Integer userId;
 	private String name;
 	private String password;
 	@Transient
@@ -24,7 +26,7 @@ public class User {
 	}
 
 	public User(Integer id, String name) {
-		this.user_id = id;
+		this.userId = id;
 		this.name = name;
 	}
 
@@ -32,7 +34,7 @@ public class User {
 	}
 
 	public Integer getId() {
-		return user_id;
+		return userId;
 	}
 
 	public String getName() {
