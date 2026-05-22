@@ -89,6 +89,11 @@ public class UserController {
 		if (!password.equals(passwordConfirm)) {
 			errorList.add("パスワードが一致していません");
 		}
+		List<User> userList = userRepository.findByName(name);
+		if (userList != null && userList.size() > 0) {
+			// 登録済みのメールアドレスが存在した場合
+			errorList.add("登録済みの名前です");
+		}
 
 		if (errorList.size() > 0) {
 			model.addAttribute("errorList", errorList);
