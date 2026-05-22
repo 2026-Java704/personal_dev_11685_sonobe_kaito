@@ -55,7 +55,6 @@ public class UserController {
 
 		account.setName(user.getName());
 		account.setId(user.getId());
-		account.setPassword(user.getPassword());
 
 		return "redirect:/task";
 	}

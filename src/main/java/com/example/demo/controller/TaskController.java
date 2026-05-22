@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -38,17 +39,24 @@ public class TaskController {
 
 	//一覧画面
 	@GetMapping("/task")
+
 	public String index(@RequestParam(defaultValue = "") Integer categoryId,
 			Model model) {
+
+		if (account.getId() == null) {
+			return "redirect:/login";
+		}
 		List<Category> categoryList = categoryRepository.findAll();
 		model.addAttribute("categories", categoryList);
 
+		List<Task> taskList = taskRepository.findAll();
+		model.addAttribute("tasks", taskList);
+
 		//一覧情報の取得
-		List<Task> taskList = null;
 		if (categoryId == null) {
-			taskList = taskRepository.findAll();
+			taskList = taskRepository.findByUserId(account.getId());
 		} else {
-			taskList = taskRepository.findByCategoryId(categoryId);
+			taskList = taskRepository.findByUserIdAndCategoryId(account.getId(), categoryId);
 		}
 		model.addAttribute("tasks", taskList);
 
@@ -57,6 +65,9 @@ public class TaskController {
 
 	@GetMapping("/tasks/create")
 	public String create() {
+		if (account.getId() == null) {
+			return "redirect:/login";
+		}
 		return "NewTask";
 	}
 
@@ -70,33 +81,57 @@ public class TaskController {
 			@RequestParam(defaultValue = "1") Integer time,
 			@RequestParam(defaultValue = "") String memo,
 			Model model) {
+		if (account.getId() == null) {
+			return "redirect:/login";
+		}
 
 		List<Category> categoryList = categoryRepository.findAll();
 		model.addAttribute("categories", categoryList);
 
-		//		Category category = categoryRepository.findById(categoryId).get();
-
 		Task task = new Task(categoryId, title, date, closingDate, time, memo);
 		task.setProgress(0);
+		task.setUserId(account.getId());
 		taskRepository.save(task);
 
 		return "redirect:/task";
 	}
 
-	//	@PostMapping("/tasks/{id}/edit")
-	//	public String register(
-	//			@RequestParam(defaultValue = "") Integer taskId,
-	//			@RequestParam(defaultValue = "") Integer categoryId,
-	//			@RequestParam(defaultValue = "") String title,
-	//			@RequestParam(defaultValue = "") Date date,
-	//			@RequestParam(defaultValue = "") Date closingDate,
-	//			@RequestParam(defaultValue = "") Integer time,
-	//			@RequestParam(defaultValue = "") String memo) {
-	//
-	//		Task task = new Task(taskId, categoryId, title, date, closingDate, time, memo);
-	//		taskRepository.save(task);
-	//
-	//		return "redirect:/task";
-	//	}
+	//更新画面表示
+	@GetMapping("/tasks/{id}/edit")
+	public String edit() {
+		if (account.getId() == null) {
+			return "redirect:/login";
+		}
+		return "EditTask";
+	}
+
+	//更新登録
+	@PostMapping("/tasks/{id}/edit")
+	public String register(
+			@PathVariable Integer id,
+			@RequestParam(defaultValue = "") Integer categoryId,
+			@RequestParam(defaultValue = "") String title,
+			@RequestParam(defaultValue = "") Integer progress,
+			@RequestParam(defaultValue = "") Date date,
+			@RequestParam(defaultValue = "") Date closingDate,
+			@RequestParam(defaultValue = "") Integer time,
+			@RequestParam(defaultValue = "") String memo) {
+
+		if (account.getId() == null) {
+			return "redirect:/login";
+		}
+
+		Task task = new Task(id, categoryId, title, progress, date, closingDate, time, memo);
+		taskRepository.save(task);
+
+		return "EditTask";
+	}
+
+	//削除処理 他ユーザーとのID一致確認未実装
+	@PostMapping("/tasks/{id}/delete")
+	public String delete(@PathVariable("id") Integer id) {
+		taskRepository.deleteById(id);
+		return "redirect:/task";
+	}
 
 }

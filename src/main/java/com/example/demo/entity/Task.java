@@ -67,6 +67,18 @@ public class Task {
 
 	}
 
+	public Task(Integer taskId, Integer categoryId, String title, Integer progress, Date date, Date closingDate,
+			Integer time, String memo) {
+		this.taskId = taskId;
+		this.title = title;
+		this.date = date;
+		this.closingDate = closingDate;
+		this.time = time;
+		this.memo = memo;
+		this.categoryId = categoryId;
+		this.progress = progress;
+	}
+
 	public Integer getTaskId() {
 		return taskId;
 	}

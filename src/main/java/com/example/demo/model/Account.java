@@ -11,8 +11,6 @@ public class Account {
 
 	private String name;
 
-	private String password;
-
 	public Account() {
 	}
 
@@ -21,9 +19,8 @@ public class Account {
 		this.name = name;
 	}
 
-	public Account(String name, String password) {
+	public Account(String name) {
 		this.name = name;
-		this.password = password;
 	}
 
 	public Integer getId() {
@@ -42,11 +39,4 @@ public class Account {
 		this.name = name;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
 }
