@@ -15,6 +15,8 @@ CREATE TABLE tasks
    memo TEXT,
    time INTEGER,
    date DATE
+--   FOREIGN KEY (user_id) REFERENCES users(user_id),
+--   FOREIGN KEY (category_id) REFERENCES categories(category_id)
 );
 -- カテゴリテーブル
 CREATE TABLE categories

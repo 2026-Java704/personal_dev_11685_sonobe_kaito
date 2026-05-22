@@ -4,6 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>タスク</title>
+	<a href="/logout">ログアウト</a>
 </head>
 
 <body>
@@ -35,13 +36,10 @@
 				<td th:text="${task.closingDate}"></td>
 				<td th:text="${task.memo}"></td>
 				<td>
-					<a th:href="@{/tasks/{id}/edit(id=${task.taskId})}">更新</a>
-				</td>
-
-				<td>
-					<form th:action="@{/tasks/{taskId}/delete(taskId=${task.id})}" method="post">
-						<button>削除</button>
-					</form>
+				<a th:href="@{/tasks/{id}/edit(id=${task.taskId})}">更新</a>
+				<form th:action="@{/tasks/{id}/delete(id=${task.taskId})}" method="post">
+					<button>削除</button>
+				</form>
 				</td>
 			</tr>
 			<tr>

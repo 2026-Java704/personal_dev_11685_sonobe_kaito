@@ -3,22 +3,21 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>新規タスク作成</title>
+	<title>タスク更新</title>
 </head>
 
 <body>
 	<main>
-		<h3>新規タスク作成</h3>
-
+		<h3>タスク更新</h3>
 		<table border="1">
-			<form action="/tasks" method="post">
+			<form th:action="@{/tasks/{id}/edit(id=${task.taskId})}" method="post">
 				<tr>
 					<input type="radio" name="categoryId" value="1" />
-					<label for="contactChoice1">仕事</label>
+					<label>仕事</label>
 				</tr>
 				<tr>
 					<input type="radio" name="categoryId" value="2" />
-					<label for="contactChoice2">日常</label>
+					<label>日常</label>
 				</tr>
 				<tr>
 					<th>タイトル</th>
@@ -29,7 +28,12 @@
 				<tr>
 					<th>進捗状況</th>
 					<td>
-						<input type="text" name="progress">
+						<input type="radio" name="progress" value="1">
+						<label>完了</label>
+						<input type="radio" name="progress" value="2">
+						<label>進行中</label>
+						<input type="radio" name="progress" value="3">
+						<label>未着手</label>
 					</td>
 				</tr>
 				<tr>
@@ -57,10 +61,7 @@
 					</td>
 				</tr>
 		</table>
-		<button>新規作成</button>
+		<button>更新</button>
 		</form>
 	</main>
 	<hr>
-</body>
-
-</html>

@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.servlet.http.HttpSession;
@@ -29,12 +30,14 @@ public class UserController {
 		this.userRepository = userRepository;
 	}
 
+	//ログイン画面表示
 	@GetMapping({ "/", "login", "logout" })
 	public String index() {
 		session.invalidate();
 		return "login";
 	}
 
+	//ログイン処理
 	@PostMapping("/login")
 	public String login(
 			@RequestParam String name,
@@ -59,21 +62,45 @@ public class UserController {
 		return "redirect:/task";
 	}
 
+	//新規登録画面
 	@GetMapping("/users/new")
 	public String create() {
 		return "NewUser";
 	}
 
+	//新規登録処理
 	@PostMapping("/users/add")
 	public String create(
 			@RequestParam(defaultValue = "") String name,
 			@RequestParam(defaultValue = "") String password,
-			@RequestParam(defaultValue = "") String passwordConfirm) {
+			@RequestParam(defaultValue = "") String passwordConfirm,
+			Model model) {
 
-		if (password.equals(passwordConfirm)) {
-			User user = new User(name, password);
-			userRepository.save(user);
+		List<String> errorList = new ArrayList<>();
+		if (name.length() == 0) {
+			errorList.add("名前は必須です");
 		}
+		if (password.length() == 0) {
+			errorList.add("パスワードを入力してください");
+		}
+		if (passwordConfirm.length() == 0) {
+			errorList.add("パスワード確認を入力してください");
+		}
+		if (!password.equals(passwordConfirm)) {
+			errorList.add("パスワードが一致していません");
+		}
+
+		if (errorList.size() > 0) {
+			model.addAttribute("errorList", errorList);
+			model.addAttribute("name", name);
+			model.addAttribute("password", password);
+			model.addAttribute("passwordConfirm", passwordConfirm);
+			return "NewUser";
+		}
+
+		User user = new User(name, password);
+		userRepository.save(user);
+
 		return "redirect:/login";
 	}
 

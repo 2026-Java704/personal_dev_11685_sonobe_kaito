@@ -84,7 +84,6 @@ public class TaskController {
 		if (account.getId() == null) {
 			return "redirect:/login";
 		}
-
 		List<Category> categoryList = categoryRepository.findAll();
 		model.addAttribute("categories", categoryList);
 
@@ -96,12 +95,17 @@ public class TaskController {
 		return "redirect:/task";
 	}
 
-	//更新画面表示
 	@GetMapping("/tasks/{id}/edit")
-	public String edit() {
+	public String edit(
+			@PathVariable Integer id,
+			Model model) {
 		if (account.getId() == null) {
 			return "redirect:/login";
 		}
+		// 主キー検索
+		Task task = taskRepository.findById(id).get();
+		model.addAttribute("task", task);
+
 		return "EditTask";
 	}
 
@@ -115,16 +119,24 @@ public class TaskController {
 			@RequestParam(defaultValue = "") Date date,
 			@RequestParam(defaultValue = "") Date closingDate,
 			@RequestParam(defaultValue = "") Integer time,
-			@RequestParam(defaultValue = "") String memo) {
+			@RequestParam(defaultValue = "") String memo,
+			Model model) {
 
 		if (account.getId() == null) {
 			return "redirect:/login";
 		}
-
-		Task task = new Task(id, categoryId, title, progress, date, closingDate, time, memo);
+		Task task = taskRepository.findById(id).get();
+		task.setCategoryId(categoryId);
+		task.setTitle(title);
+		task.setProgress(progress);
+		task.setDate(date);
+		task.setClosingDate(closingDate);
+		task.setTime(time);
+		task.setMemo(memo);
+		task.setUserId(account.getId());
 		taskRepository.save(task);
 
-		return "EditTask";
+		return "redirect:/task";
 	}
 
 	//削除処理 他ユーザーとのID一致確認未実装
