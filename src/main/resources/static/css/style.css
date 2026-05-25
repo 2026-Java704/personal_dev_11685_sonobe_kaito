@@ -1,0 +1,120 @@
+/* 全体 */
+body {
+	background-color: #e6e6fa;
+	/* 背景色  */
+	text-align: center;
+	/* 中央寄せ */
+	min-width: 900px;
+	/* 最小幅 */
+}
+
+/* ヘッダー、ナビゲーションメニュー、フッター */
+header,
+nav,
+footer {
+	background-color: rgb(128, 128, 128);
+	/* 背景色 */
+	color: #ffffff;
+	/* 文字色 */
+	padding-top: 5px;
+	/* 内側余白(上) */
+	padding-bottom: 5px;
+	/* 内側余白(下) */
+}
+
+/* ヘッダー、ナビゲーション内リンク */
+header a,
+nav a {
+	color: #ffffff;
+}
+footer a,
+nav a {
+	color: #ffffff;
+}
+
+
+/* ヘッダー内見出し */
+header h1 {
+	font-size: 20pt;
+	margin: 10px auto;
+}
+
+/* 仕切り線 */
+/*hr {*/
+/*	border-top: 2px dashed rgb(128, 128, 128);*/
+/*}*/
+
+/* メイン */
+main {
+	background-color: #FFFFFF;
+	min-height: 50px;
+	padding: 20px;
+}
+
+/* 表線 */
+table,
+th,
+td {
+	border-collapse: collapse;
+	border: 1px solid rgb(128, 128, 128);
+}
+
+/* 表 */
+table {
+	margin: 5px auto;
+	min-width: 800px;
+}
+
+/* 表見出しセル */
+table th {
+	background: rgb(128, 128, 128);
+	color: #ffffff;
+}
+
+/* 送信ボタン */
+button {
+	margin: 2px;
+	padding: 5px 20px;
+	background-color: rgb(128, 128, 128);
+	color: #ffffff;
+	border: none;
+	width: 150px;
+	cursor: pointer;
+	border-radius: 5px;
+}
+
+/* 送信ボタン(マウスオーバー時) */
+button:hover {
+	background-color: rgb(255, 128, 0);
+}
+
+/* エラーメッセージ */
+ul.error {
+	color: red;
+	list-style: none;
+	padding-left: 0;
+}
+
+
+
+
+/*td {*/
+/*    background-color: #ff0000 !important;*/
+/*}*/
+
+
+.btn {
+	display: inline-block;
+	background-color:  rgb(128, 128, 128);
+	color:  #ffffff;
+	text-decoration: none;
+	padding: 0.2rem 3.7rem;
+	border-radius: 5px;
+	/* 角を丸くする */
+}
+
+/* マウスを乗せた時の動き */
+.btn:hover {
+	background-color: rgb(255, 128, 0);
+	color: #ffffff;
+}

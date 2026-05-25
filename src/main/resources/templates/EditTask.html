@@ -4,69 +4,78 @@
 <head>
 	<meta charset="UTF-8">
 	<title>タスク更新</title>
+
+	<header th:replace="~{header}"></header>
 </head>
 
-<>
-	<main>
-		<h3>タスク更新</h3>
-		<table border="1">
-			<form th:action="@{/tasks/{id}/edit(id=${task.taskId})}" method="post" th:object="${form}">
-				<tr>
-					<input type="radio" name="categoryId" value="1" />
-					<label>仕事</label>
-				</tr>
-				<tr>
-					<input type="radio" name="categoryId" value="2" />
-					<label>日常</label>
-				</tr>
-				<tr>
-					<th>タイトル</th>
-					<td>
-						<input type="text" name="title">
-					</td>
-				</tr>
-				<tr>
-					<th>進捗状況</th>
-					<td>
-						<div>
-		
+<main>
+	<h3>タスク更新</h3>
+	<table border="1">
+		<form th:action="@{/tasks/{id}/edit(id=${task.taskId})}" method="post" th:object="${form}">
+			<link rel="stylesheet" type="text/css" href="/css/style.css">
+			<tr>
+				<input type="radio" name="categoryId" value="1" />
+				<label>仕事</label>
+			</tr>
+			<tr>
+				<input type="radio" name="categoryId" value="2" />
+				<label>日常</label>
+			</tr>
+			<tr>
+				<th>タイトル</th>
+				<td>
+					<input type="text" name="title">
+				</td>
+			</tr>
+			<tr>
+				<th>進捗状況</th>
+				<td>
+					<div>
+
 						<input type="radio" name="progress" value="1">
 						<label>完了</label>
 						<input type="radio" name="progress" value="2">
 						<label>進行中</label>
 						<input type="radio" name="progress" value="3">
 						<label>未着手</label>
-						<span th:if="${task.progress == 1}">完了</span>
-						<span th:if="${task.progress == 2}">進行中</span>
-						<span th:if="${task.progress == 3}">未着手</span>
-</td>
-</tr>
-<tr>
-	<th>タスク開始日</th>
-	<td>
-		<input type="date" name="date">
-	</td>
-</tr>
-<tr>
-	<th>期限</th>
-	<td>
-		<input type="date" name="closingDate">
-	</td>
-</tr>
-<tr>
-	<th>予想所要時間</th>
-	<td>
-		<input type="text" name="time">
-	</td>
-</tr>
-<tr>
-	<th>メモ</th>
-	<td>
-		<input type="text" name="memo">
-	</td>
-</tr>
-</table>
-<button>更新</button>
-</form>
+						<div>
+							<!--					<td th:if="${task.progress == 1}">完了</td>-->
+							<!--					<td th:if="${task.progress == 2 }">進行中</td>-->
+							<!--					<td th:if="${task.progress == 3 }">未着手</td>-->
+							<!--					</div>-->
+							<!--					<span th:if="${task.progress == 1}">完了</span>-->
+							<!--					<span th:if="${task.progress == 2}">進行中</span>-->
+							<!--					<span th:if="${task.progress == 3}">未着手</span>-->
+				</td>
+			</tr>
+			<tr>
+				<th>タスク開始日</th>
+				<td>
+					<input type="date" name="date">
+				</td>
+			</tr>
+			<tr>
+				<th>期限</th>
+				<td>
+					<input type="date" name="closingDate">
+				</td>
+			</tr>
+			<tr>
+				<th>予想所要時間</th>
+				<td>
+					<input type="text" name="time" >
+				</td>
+			</tr>
+			<tr>
+				<th>メモ</th>
+				<td>
+					<input type="text" name="memo">
+				</td>
+			</tr>
+	</table>
+	<button>更新</button>
+	<br> <span th:text="${message}" style="color: red"></span>
+	</form>
+	<footer th:replace="footer"></footer>
 </main>
 <hr>

@@ -4,14 +4,24 @@
 <head>
 	<meta charset="UTF-8">
 	<title>新規タスク作成</title>
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
+	<header th:replace="~{header}"></header>
 </head>
 
 <body>
 	<main>
 		<h3>新規タスク作成</h3>
-		
+
 		<table border="1">
 			<form action="/tasks/create" method="post">
+				<div th:if="${errorList}">
+				    <ul>
+				        <li th:each="error : ${errorList}"
+				            th:text="${error}"
+				            style="color:red">
+				        </li>
+				    </ul>
+				</div>
 				<tr>
 					<input type="radio" name="categoryId" value="1" />
 					<label for="contactChoice1">仕事</label>
@@ -20,35 +30,49 @@
 					<input type="radio" name="categoryId" value="2" />
 					<label for="contactChoice2">日常</label>
 				</tr>
-		
+
 				<tr>
 					<th>タイトル</th>
 					<td>
-						<input type="text" name="title">
+						<input type="text" name="title" th:value="${title}">
+					</td>
+				</tr>
+				<tr>
+					<th>進捗状況</th>
+					<td>
+						<div>
+
+<!--							<input type="radio" name="progress" value="1">-->
+<!--							<label>完了</label>-->
+							<input type="radio" name="progress" value="2">
+							<label>進行中</label>
+							<input type="radio" name="progress" value="3">
+							<label>未着手</label>
+							</div>
 					</td>
 				</tr>
 				<tr>
 					<th>タスク開始日</th>
 					<td>
-						<input type="date" name="date">
+						<input type="date" name="date" th:value="${date}">
 					</td>
 				</tr>
 				<tr>
 					<th>期限</th>
 					<td>
-						<input type="date" name="closingDate">
+						<input type="date" name="closingDate" th:value="${closingDate}">
 					</td>
 				</tr>
 				<tr>
-					<th>予想所要時間</th>
+					<th>予定完了時間</th>
 					<td>
-						<input type="text" name="time">
+						<input type="text" name="time" th:value="${time}">
 					</td>
 				</tr>
 				<tr>
 					<th>メモ</th>
 					<td>
-						<input type="text" name="memo">
+						<input type="text" name="memo" th:value="${memo}">
 					</td>
 				</tr>
 		</table>

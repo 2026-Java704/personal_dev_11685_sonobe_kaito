@@ -4,22 +4,27 @@
 <head>
 	<meta charset="UTF-8">
 	<title>タスク</title>
-	<button onclick="confirmLogout()">ログアウト</button>
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
+	<header th:replace="~{header}"></header>
+
 </head>
 
 <body>
 	<main>
-		<h3>タスク</h3>
 		<td>
 			<form>
 
-				<a href="/task">全て</a>
-				<a href="/task?categoryId=2">日常</a>
-				<a href="/task?categoryId=1">仕事</a>
-			
+				<a href="/task" class="btn">全て</a>
+				<a href="/task?categoryId=2" class="btn">日常</a>
+				<a href="/task?categoryId=1"class="btn">仕事</a>
+
 			</form>
 		</td>
+
+
+
 		<table border="1">
+			<h1>タスク一覧</h1>
 			<tr>
 				<th>タイトル</th>
 				<th>進捗状況</th>
@@ -28,20 +33,32 @@
 				<th>メモ</th>
 				<th>操作</th>
 			</tr>
-<!--			<tr>-->
-<!--				<td th:text="${task.title}"></td>-->
-<!--			</tr>-->
+			<tr>
+				
+			</tr>
 			<tr th:each="task : ${tasks}">
 				<td th:text="${task.title}"></td>
-				<td th:text="${task.progress}"></td>
+				<td th:switch="${task.progress}">
+					<span th:case="1">完了</span>
+					<span th:case="2">進行中</span>
+					<span th:case="3">未着手</span>
+					<span th:case="*">UNKNOWN</span>
+				</td>
+
 				<td th:text="${task.date}"></td>
 				<td th:text="${task.closingDate}"></td>
 				<td th:text="${task.memo}"></td>
 				<td>
-				<a th:href="@{/tasks/{id}/edit(id=${task.taskId})}">更新</a>
-				<form th:action="@{/tasks/{id}/delete(id=${task.taskId})}" method="post">
-					<button>削除</button>
-				</form>
+					<a th:href="@{/tasks/{id}/edit(id=${task.taskId})}" class="btn">更新</a>
+
+<!--					<a th:href="@{/tasks/{id}/sum(id=${task.taskId})}" class="btn">完了ボタン</a>-->
+<!--					<form th:action="@/tasks/{id}/sum(id=${task.taskId})" method="post">-->
+<!--					    <button>完了する</button>-->
+<!--					</form>-->
+
+					<form th:action="@{/tasks/{id}/delete(id=${task.taskId})}" method="post">
+						<button>削除</button>
+					</form>
 				</td>
 			</tr>
 			<tr>
@@ -56,6 +73,7 @@
 
 	</main>
 	<hr>
+	<footer th:replace="footer"></footer>
 </body>
 
 </html>

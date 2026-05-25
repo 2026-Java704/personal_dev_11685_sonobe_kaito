@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
-import java.sql.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.servlet.http.HttpSession;
@@ -76,19 +77,42 @@ public class TaskController {
 	public String register(
 			@RequestParam(defaultValue = "1") Integer categoryId,
 			@RequestParam(defaultValue = "") String title,
-			@RequestParam(defaultValue = "") Date date,
-			@RequestParam(defaultValue = "") Date closingDate,
+			@RequestParam(defaultValue = "") Integer progress,
+			@RequestParam(required = false) LocalDate date,
+			@RequestParam(required = false) LocalDate closingDate,
 			@RequestParam(defaultValue = "1") Integer time,
 			@RequestParam(defaultValue = "") String memo,
 			Model model) {
 		if (account.getId() == null) {
 			return "redirect:/login";
 		}
+
+		List<String> errorList = new ArrayList<>();
+		if (title.length() == 0) {
+			errorList.add("タイトルは必須です");
+		}
+		if (date == null) {
+			errorList.add("開始日付を選択してください");
+		}
+		if (closingDate == null) {
+			errorList.add("期限を選択してください");
+		}
+
+		if (errorList.size() > 0) {
+			model.addAttribute("errorList", errorList);
+			model.addAttribute("title", title);
+			model.addAttribute("progress", progress);
+			model.addAttribute("date", date);
+			model.addAttribute("closingDate", closingDate);
+			model.addAttribute("time", time);
+			model.addAttribute("memo", memo);
+
+			return "NewTask";
+		}
 		List<Category> categoryList = categoryRepository.findAll();
 		model.addAttribute("categories", categoryList);
 
-		Task task = new Task(categoryId, title, date, closingDate, time, memo);
-		task.setProgress(0);
+		Task task = new Task(categoryId, title, progress, date, closingDate, time, memo);
 		task.setUserId(account.getId());
 		taskRepository.save(task);
 
@@ -116,8 +140,8 @@ public class TaskController {
 			@RequestParam(defaultValue = "") Integer categoryId,
 			@RequestParam(defaultValue = "") String title,
 			@RequestParam(defaultValue = "") Integer progress,
-			@RequestParam(defaultValue = "") Date date,
-			@RequestParam(defaultValue = "") Date closingDate,
+			@RequestParam(required = false) LocalDate date,
+			@RequestParam(required = false) LocalDate closingDate,
 			@RequestParam(defaultValue = "") Integer time,
 			@RequestParam(defaultValue = "") String memo,
 			Model model) {
@@ -125,7 +149,42 @@ public class TaskController {
 		if (account.getId() == null) {
 			return "redirect:/login";
 		}
+		List<String> errorList = new ArrayList<>();
+		if (title.length() == 0) {
+			errorList.add("タイトルは必須です");
+		}
+		if (progress == null) {
+			errorList.add("進行度を選択してください");
+		}
+		if (date == null) {
+			errorList.add("開始日付を選択してください");
+		}
+		if (closingDate == null) {
+			errorList.add("を選択してください");
+		}
+
+		if (errorList.size() > 0) {
+			model.addAttribute("errorList", errorList);
+			model.addAttribute("title", title);
+			model.addAttribute("progress", progress);
+			model.addAttribute("date", date);
+			model.addAttribute("closingDate", closingDate);
+			model.addAttribute("time", time);
+
+			return "NewTask";
+		}
+
 		Task task = taskRepository.findById(id).get();
+
+		if (!task.getUserId().equals(account.getId())) {
+			return "redirect:/tasks";
+		}
+
+		if (progress != null && progress == 2) {
+			taskRepository.deleteById(id);
+			return "redirect:/tasks";
+		}
+
 		task.setCategoryId(categoryId);
 		task.setTitle(title);
 		task.setProgress(progress);
@@ -133,7 +192,7 @@ public class TaskController {
 		task.setClosingDate(closingDate);
 		task.setTime(time);
 		task.setMemo(memo);
-		task.setUserId(account.getId());
+		//		task.setUserId(account.getId());
 		taskRepository.save(task);
 
 		return "redirect:/task";
@@ -142,8 +201,33 @@ public class TaskController {
 	//削除処理 他ユーザーとのID一致確認未実装
 	@PostMapping("/tasks/{id}/delete")
 	public String delete(@PathVariable("id") Integer id) {
+		if (account.getId() == null) {
+			return "redirect:/login";
+		}
+
+		Task task = taskRepository.findById(id).get();
+
+		if (!task.getUserId().equals(account.getId())) {
+			return "redirect:/tasks";
+		}
+
 		taskRepository.deleteById(id);
-		return "redirect:/task";
+
+		return "redirect:/tasks";
 	}
 
+	//	@GetMapping("/tasks/{id}/sum")
+	//	public String sum(
+	//			@PathVariable Integer id,
+	//			@RequestParam(defaultValue = "") Integer progress,
+	//			Model model) {
+	//		Task task = taskRepository.findById(id).get();
+	//		if (progress != 1) {
+	//			task.setProgress(1);
+	//			task.setUserId(account.getId());
+	//			taskRepository.save(task);
+	//			return "redirect:/task";
+	//		}
+	//		return "redirect:/task";
+	//	}
 }

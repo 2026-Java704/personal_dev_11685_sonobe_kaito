@@ -1,6 +1,6 @@
 package com.example.demo.entity;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,9 +21,9 @@ public class Task {
 	@Column(name = "category_id")
 	private Integer categoryId;
 	private String title;
-	private Date date;
+	private LocalDate date;
 	@Column(name = "closing_date")
-	private Date closingDate;
+	private LocalDate closingDate;
 	private Integer time;
 	private String memo;
 	private Integer progress;
@@ -31,17 +31,18 @@ public class Task {
 	public Task() {
 	}
 
-	public Task(Integer categoryId, String title, Date date, Date closingDate,
+	public Task(Integer categoryId, String title, Integer progress, LocalDate date, LocalDate closingDate,
 			Integer time, String memo) {
 		this.categoryId = categoryId;
 		this.title = title;
+		this.progress = progress;
 		this.date = date;
 		this.closingDate = closingDate;
 		this.time = time;
 		this.memo = memo;
 	}
 
-	public Task(Integer taskId, Integer categoryId, String title, Date date, Date closingDate,
+	public Task(Integer taskId, Integer categoryId, String title, LocalDate date, LocalDate closingDate,
 			Integer time, String memo) {
 		this.taskId = taskId;
 		this.title = title;
@@ -53,7 +54,7 @@ public class Task {
 
 	}
 
-	public Task(Integer taskId, Integer userId, Integer categoryId, String title, Date date, Date closingDate,
+	public Task(Integer taskId, Integer userId, Integer categoryId, String title, LocalDate date, LocalDate closingDate,
 			Integer time, String memo, Integer progress) {
 		this.taskId = taskId;
 		this.title = title;
@@ -67,7 +68,8 @@ public class Task {
 
 	}
 
-	public Task(Integer taskId, Integer categoryId, String title, Integer progress, Date date, Date closingDate,
+	public Task(Integer taskId, Integer categoryId, String title, Integer progress, LocalDate date,
+			LocalDate closingDate,
 			Integer time, String memo) {
 		this.taskId = taskId;
 		this.title = title;
@@ -111,19 +113,19 @@ public class Task {
 		this.title = title;
 	}
 
-	public Date getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 
-	public Date getClosingDate() {
+	public LocalDate getClosingDate() {
 		return closingDate;
 	}
 
-	public void setClosingDate(Date closingDate) {
+	public void setClosingDate(LocalDate closingDate) {
 		this.closingDate = closingDate;
 	}
 

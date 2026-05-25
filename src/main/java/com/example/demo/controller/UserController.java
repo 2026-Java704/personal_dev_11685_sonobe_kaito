@@ -45,13 +45,13 @@ public class UserController {
 			Model model) {
 		// 名前が空の場合にエラーとする
 		if (name.length() == 0 || password.length() == 0) {
-			model.addAttribute("message", "入力してください");
+			model.addAttribute("message", "名前もしくはパスワードを入力してください");
 			return "login";
 		}
 		List<User> userList = userRepository.findByNameAndPassword(name, password);
 		if (userList == null || userList.size() == 0) {
 			// 存在しなかった場合
-			model.addAttribute("message", "名前かパスワードが一致しませんでした");
+			model.addAttribute("message", "名前とパスワードが一致しませんでした");
 			return "login";
 		}
 		User user = userList.get(0);
