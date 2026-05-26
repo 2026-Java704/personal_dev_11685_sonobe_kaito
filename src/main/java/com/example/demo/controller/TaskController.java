@@ -61,6 +61,17 @@ public class TaskController {
 		}
 		model.addAttribute("tasks", taskList);
 
+		//合計時間の表示
+		//		List<Task> tasks = taskRepository.findAll();
+
+		int sum = 0;
+
+		for (Task task : taskList) {
+			sum += task.getTime();
+		}
+
+		model.addAttribute("sum", sum);
+
 		return "task";
 	}
 
@@ -97,9 +108,24 @@ public class TaskController {
 		if (closingDate == null) {
 			errorList.add("期限を選択してください");
 		}
+		if (date != null && closingDate != null) {
+			if (date.isAfter(closingDate)) {
+				errorList.add("開始日は期限より前に設定してください");
+			}
+		}
+		if (progress == null) {
+			errorList.add("進捗状況が設定されていません");
+		}
+		if (categoryId == null) {
+			errorList.add("カテゴリが設定されていません");
+		}
+		if (time <= 0) {
+			errorList.add("1分未満は設定できません");
+		}
 
 		if (errorList.size() > 0) {
 			model.addAttribute("errorList", errorList);
+			model.addAttribute("categoryId", categoryId);
 			model.addAttribute("title", title);
 			model.addAttribute("progress", progress);
 			model.addAttribute("date", date);
@@ -109,6 +135,7 @@ public class TaskController {
 
 			return "NewTask";
 		}
+
 		List<Category> categoryList = categoryRepository.findAll();
 		model.addAttribute("categories", categoryList);
 
@@ -137,41 +164,17 @@ public class TaskController {
 	@PostMapping("/tasks/{id}/edit")
 	public String register(
 			@PathVariable Integer id,
-			@RequestParam(defaultValue = "") Integer categoryId,
+			@RequestParam(required = false) Integer categoryId,
 			@RequestParam(defaultValue = "") String title,
-			@RequestParam(defaultValue = "") Integer progress,
+			@RequestParam(required = false) Integer progress,
 			@RequestParam(required = false) LocalDate date,
 			@RequestParam(required = false) LocalDate closingDate,
-			@RequestParam(defaultValue = "") Integer time,
+			@RequestParam(required = false) Integer time,
 			@RequestParam(defaultValue = "") String memo,
 			Model model) {
 
 		if (account.getId() == null) {
 			return "redirect:/login";
-		}
-		List<String> errorList = new ArrayList<>();
-		if (title.length() == 0) {
-			errorList.add("タイトルは必須です");
-		}
-		if (progress == null) {
-			errorList.add("進行度を選択してください");
-		}
-		if (date == null) {
-			errorList.add("開始日付を選択してください");
-		}
-		if (closingDate == null) {
-			errorList.add("を選択してください");
-		}
-
-		if (errorList.size() > 0) {
-			model.addAttribute("errorList", errorList);
-			model.addAttribute("title", title);
-			model.addAttribute("progress", progress);
-			model.addAttribute("date", date);
-			model.addAttribute("closingDate", closingDate);
-			model.addAttribute("time", time);
-
-			return "NewTask";
 		}
 
 		Task task = taskRepository.findById(id).get();
@@ -180,9 +183,52 @@ public class TaskController {
 			return "redirect:/tasks";
 		}
 
-		if (progress != null && progress == 2) {
-			taskRepository.deleteById(id);
-			return "redirect:/tasks";
+		List<String> errorList = new ArrayList<>();
+
+		if (title == null || title.length() == 0) {
+			errorList.add("タイトルは必須です");
+		}
+
+		if (date == null) {
+			errorList.add("開始日付を選択してください");
+		}
+
+		if (closingDate == null) {
+			errorList.add("期限を選択してください");
+		}
+
+		if (date != null && closingDate != null && date.isAfter(closingDate)) {
+			errorList.add("開始日は期限より前に設定してください");
+		}
+
+		if (progress == null) {
+			errorList.add("進捗状況が設定されていません");
+		}
+
+		if (categoryId == null) {
+			errorList.add("カテゴリが設定されていません");
+		}
+
+		if (time == null || time <= 0) {
+			errorList.add("1分未満は設定できません");
+		}
+
+		if (errorList.size() > 0) {
+			task.setCategoryId(categoryId);
+			task.setTitle(title);
+			task.setProgress(progress);
+			task.setDate(date);
+			task.setClosingDate(closingDate);
+			task.setTime(time);
+			task.setMemo(memo);
+
+			model.addAttribute("errorList", errorList);
+			model.addAttribute("task", task);
+
+			List<Category> categoryList = categoryRepository.findAll();
+			model.addAttribute("categories", categoryList);
+
+			return "editTask";
 		}
 
 		task.setCategoryId(categoryId);
@@ -192,14 +238,14 @@ public class TaskController {
 		task.setClosingDate(closingDate);
 		task.setTime(time);
 		task.setMemo(memo);
-		//		task.setUserId(account.getId());
+
 		taskRepository.save(task);
 
 		return "redirect:/task";
 	}
 
 	//削除処理 他ユーザーとのID一致確認未実装
-	@PostMapping("/tasks/{id}/delete")
+	@GetMapping("/tasks/{id}/delete")
 	public String delete(@PathVariable("id") Integer id) {
 		if (account.getId() == null) {
 			return "redirect:/login";
@@ -208,26 +254,60 @@ public class TaskController {
 		Task task = taskRepository.findById(id).get();
 
 		if (!task.getUserId().equals(account.getId())) {
-			return "redirect:/tasks";
+			return "redirect:/task";
 		}
 
 		taskRepository.deleteById(id);
 
-		return "redirect:/tasks";
+		return "redirect:/task";
 	}
 
-	//	@GetMapping("/tasks/{id}/sum")
+	//完了処理
+	@GetMapping("/tasks/{id}/end")
+	public String end(
+			@PathVariable Integer id,
+			@RequestParam(defaultValue = "") Integer progress,
+			Model model) {
+
+		Task task = taskRepository.findById(id).get();
+
+		task.setProgress(1);
+		taskRepository.save(task);
+		return "redirect:/task";
+	}
+
+	//	@GetMapping("/logout")
+	//	public String logout() {
+	//		return "logout";
+	//	}
+	//合計時間
+	//	@GetMapping("/task")
+	//	public String index(Model model) {
+	//
+	//		List<Task> tasks = taskRepository.findAll();
+	//
+	//		int sum = 0;
+	//
+	//		for (Task task : tasks) {
+	//			sum += task.getTime();
+	//		}
+	//
+	//		model.addAttribute("tasks", tasks);
+	//		model.addAttribute("sum", sum);
+	//
+	//		return "task";
+	//	}
+	//	@PostMapping("/tasks/{id}/sum")
 	//	public String sum(
 	//			@PathVariable Integer id,
-	//			@RequestParam(defaultValue = "") Integer progress,
+	//			@RequestParam(defaultValue = "") Integer time,
 	//			Model model) {
+	//
 	//		Task task = taskRepository.findById(id).get();
-	//		if (progress != 1) {
-	//			task.setProgress(1);
-	//			task.setUserId(account.getId());
-	//			taskRepository.save(task);
-	//			return "redirect:/task";
-	//		}
+	//
+	//		task.setProgress(1);
+	//		taskRepository.save(task);
 	//		return "redirect:/task";
 	//	}
+
 }

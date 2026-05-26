@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "tasks")
@@ -27,6 +28,16 @@ public class Task {
 	private Integer time;
 	private String memo;
 	private Integer progress;
+	@Transient
+	private Integer sum;
+
+	public Integer getSum() {
+		return sum;
+	}
+
+	public void setSum(Integer sum) {
+		this.sum = sum;
+	}
 
 	public Task() {
 	}

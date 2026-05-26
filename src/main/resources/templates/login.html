@@ -6,14 +6,22 @@
 <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 <body>
+	
 	<header>
-		<h1>Todoアプリ</h1>
+		<h2>Todoアプリ</h2>
 	</header>
 	<main>
 		<form action="/login" method="post">
-			<input type="text" name="name" placeholder="ユーザー名"><br>
-			<input type="password" name="password" placeholder="パスワード"><br>
-			<button>ログイン</button>
+			
+				<label for="email" class="form-label">ユーザー名</label>
+			<input type="text" name="name" placeholder="ユーザー名"
+			class="form-label"required><br>
+			
+				<label for="password" class="form-label">パスワード</label>
+			<input type="password" name="password" placeholder="パスワード"
+			class="form-label"required><br>
+	
+			<button type="submit" class="btn-login">ログイン</button>
 			<br> <span th:text="${message}" style="color: red"></span>
 		</form>
 		<br>
@@ -21,3 +29,4 @@
 	</main>
 </body>
 </html>
+

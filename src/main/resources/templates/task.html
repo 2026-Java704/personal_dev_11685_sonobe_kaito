@@ -11,30 +11,29 @@
 
 <body>
 	<main>
+		<h1>タスク一覧</h1>
 		<td>
 			<form>
 
 				<a href="/task" class="btn">全て</a>
 				<a href="/task?categoryId=2" class="btn">日常</a>
-				<a href="/task?categoryId=1"class="btn">仕事</a>
+				<a href="/task?categoryId=1" class="btn">仕事</a>
 
 			</form>
 		</td>
 
-
+		<p>予想合計タスク時間: <span th:text="${sum}"></span>分</p>
 
 		<table border="1">
-			<h1>タスク一覧</h1>
+
 			<tr>
 				<th>タイトル</th>
 				<th>進捗状況</th>
 				<th>開始日</th>
 				<th>期限</th>
 				<th>メモ</th>
-				<th>操作</th>
-			</tr>
-			<tr>
-				
+				<th colspan="3">操作</th>
+
 			</tr>
 			<tr th:each="task : ${tasks}">
 				<td th:text="${task.title}"></td>
@@ -50,15 +49,15 @@
 				<td th:text="${task.memo}"></td>
 				<td>
 					<a th:href="@{/tasks/{id}/edit(id=${task.taskId})}" class="btn">更新</a>
-
-<!--					<a th:href="@{/tasks/{id}/sum(id=${task.taskId})}" class="btn">完了ボタン</a>-->
-<!--					<form th:action="@/tasks/{id}/sum(id=${task.taskId})" method="post">-->
-<!--					    <button>完了する</button>-->
+				</td>
+				<td>
+					<a th:href="@{/tasks/{id}/end(id=${task.taskId})}" class="btn">完了</a>
+				</td>
+				<td>
+					<a th:href="@{/tasks/{id}/delete(id=${task.taskId})}" class="btn">削除</a>
+<!--					<form th:action="@{/tasks/{id}/delete(id=${task.taskId})}" method="post">-->
+<!--						<button>削除</button>-->
 <!--					</form>-->
-
-					<form th:action="@{/tasks/{id}/delete(id=${task.taskId})}" method="post">
-						<button>削除</button>
-					</form>
 				</td>
 			</tr>
 			<tr>

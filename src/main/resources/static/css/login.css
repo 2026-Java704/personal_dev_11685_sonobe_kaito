@@ -1,0 +1,104 @@
+/* ログインフォームのスタイル */
+.login {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.login h2 {
+  text-align: center;
+  margin-bottom: 3rem;
+  color: #333;
+  font-weight: 100;
+}
+
+.login .form-group {
+  margin-bottom: 1.5rem;
+}
+
+.login .form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 1000;
+  color: #555;
+}
+
+.login .form-control {
+  width: 100%;
+  padding: 20px 24px;
+  border: 2px solid #e1e5e9;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  background-color: #fff;
+  box-sizing: border-box;
+}
+
+.login .form-control:focus {
+  outline: none;
+  border-color: rgb(128, 128, 128);
+  box-shadow: 0 0 0 3px rgb(128, 128, 128);
+}
+
+.login .btn-login {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, rgb(128, 128, 128), #ff8e8e);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.login .btn-login:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+}
+
+.login .form-check {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.login .form-check-input {
+  margin-right: 0.5rem;
+}
+
+.login .form-check-label {
+  font-size: 14px;
+  color: #666;
+}
+
+.login .forgot-password {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.login .forgot-password a {
+  color: #ff6b6b;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.login .forgot-password a:hover {
+  text-decoration: underline;
+}
+link-btn {
+  display: inline-block;
+  background-color: #3b82f6; /* 背景色 */
+  color: #ffffff; /* 文字色 */
+  padding: 12px 24px; /* 余白 */
+  text-decoration: none; /* 下線を消す */
+  border-radius: 4px; /* 角丸 */
+  font-weight: bold;
+}
+.link-btn:hover {
+  background-color: #2563eb; /* マウスを乗せた時の色 */
+}
