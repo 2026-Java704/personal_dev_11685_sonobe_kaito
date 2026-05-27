@@ -5,10 +5,13 @@
 	<meta charset="UTF-8">
 	<title>新規登録</title>
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
-	<header th:replace="~{header}"></header>
+	
 </head>
 
 <body>
+	<header>
+		<h2>Todoアプリ</h2>
+	</header>
 	<main>
 		<h1>新規登録</h1>
 		<form action="/users/add" method="post">
@@ -40,6 +43,7 @@
 			</table>
 			<button>登録</button>
 		</form>
+		<a href="/login" class="btttn">ログインへ戻る</a>
 		
 	
 	</main>

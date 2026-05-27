@@ -51,7 +51,7 @@ public class UserController {
 		List<User> userList = userRepository.findByNameAndPassword(name, password);
 		if (userList == null || userList.size() == 0) {
 			// 存在しなかった場合
-			model.addAttribute("message", "名前とパスワードが一致しませんでした");
+			model.addAttribute("message", "名前もしくはパスワードが一致しませんでした");
 			return "login";
 		}
 		User user = userList.get(0);

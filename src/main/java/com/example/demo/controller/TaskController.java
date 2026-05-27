@@ -88,10 +88,10 @@ public class TaskController {
 	public String register(
 			@RequestParam(defaultValue = "1") Integer categoryId,
 			@RequestParam(defaultValue = "") String title,
-			@RequestParam(defaultValue = "") Integer progress,
+			@RequestParam(defaultValue = "3") Integer progress,
 			@RequestParam(required = false) LocalDate date,
 			@RequestParam(required = false) LocalDate closingDate,
-			@RequestParam(defaultValue = "1") Integer time,
+			@RequestParam(defaultValue = "0") Integer time,
 			@RequestParam(defaultValue = "") String memo,
 			Model model) {
 		if (account.getId() == null) {
@@ -279,35 +279,6 @@ public class TaskController {
 	//	@GetMapping("/logout")
 	//	public String logout() {
 	//		return "logout";
-	//	}
-	//合計時間
-	//	@GetMapping("/task")
-	//	public String index(Model model) {
-	//
-	//		List<Task> tasks = taskRepository.findAll();
-	//
-	//		int sum = 0;
-	//
-	//		for (Task task : tasks) {
-	//			sum += task.getTime();
-	//		}
-	//
-	//		model.addAttribute("tasks", tasks);
-	//		model.addAttribute("sum", sum);
-	//
-	//		return "task";
-	//	}
-	//	@PostMapping("/tasks/{id}/sum")
-	//	public String sum(
-	//			@PathVariable Integer id,
-	//			@RequestParam(defaultValue = "") Integer time,
-	//			Model model) {
-	//
-	//		Task task = taskRepository.findById(id).get();
-	//
-	//		task.setProgress(1);
-	//		taskRepository.save(task);
-	//		return "redirect:/task";
 	//	}
 
 }

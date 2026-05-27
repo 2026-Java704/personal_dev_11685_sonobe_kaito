@@ -20,13 +20,13 @@
 				</ul>
 			</div>
 			<tr>
-				<th>カテゴリー</th>
-				<td>
-					<input type="radio" name="categoryId" value="1" />
-					<label for="contactChoice1">仕事</label>
-					<input type="radio" name="categoryId" value="2" />
-					<label for="contactChoice2">日常</label>
-				</td>
+			    <th>カテゴリー</th>
+			    <td>
+			        <input type="radio" name="categoryId" value="1" th:checked="${task.categoryId == 1}" />
+			        <label for="contactChoice1">仕事</label>
+			        <input type="radio" name="categoryId" value="2" th:checked="${task.categoryId == 2}" />
+			        <label for="contactChoice2">日常</label>
+			    </td>
 			</tr>
 			<tr>
 				<th>タイトル</th>
@@ -35,18 +35,17 @@
 				</td>
 			</tr>
 			<tr>
-				<th>進捗状況</th>
-				<td>
-					<div>
-
-						<input type="radio" name="progress" value="1">
-						<label>完了</label>
-						<input type="radio" name="progress" value="2">
-						<label>進行中</label>
-						<input type="radio" name="progress" value="3">
-						<label>未着手</label>
-						<div>
-				</td>
+			    <th>進捗状況</th>
+			    <td>
+			        <div>
+			            <input type="radio" name="progress" value="1" th:checked="${task.progress == 1}">
+			            <label>完了</label>
+			            <input type="radio" name="progress" value="2" th:checked="${task.progress == 2}">
+			            <label>進行中</label>
+			            <input type="radio" name="progress" value="3" th:checked="${task.progress == 3}">
+			            <label>未着手</label>
+			        </div>
+			    </td>
 			</tr>
 			<tr>
 				<th>タスク開始日</th>
@@ -67,10 +66,10 @@
 				</td>
 			</tr>
 			<tr>
-				<th>メモ</th>
-				<td>
-					<textarea name="memo" maxlength="60" th:value="${task.memo}"></textarea>
-				</td>
+			    <th>メモ</th>
+			    <td>
+			        <textarea name="memo" maxlength="60" th:text="${task.memo}"></textarea>
+			    </td>
 			</tr>
 	</table>
 	<button>更新</button>

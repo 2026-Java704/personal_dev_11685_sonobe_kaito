@@ -63,12 +63,17 @@ td {
 table {
 	margin: 5px auto;
 	min-width: 800px;
+/*table-layout: fixed;  表の幅を固定する */
+/*  width: 100%;        または固定値（例: 600px） */
 }
 
 /* 表見出しセル */
 table th {
 	background: rgb(128, 128, 128);
 	color: #ffffff;
+	width: auto;       /* 基本は均等、または個別の th/td に幅を指定 */
+	 word-break: break-all; /* 長い英単語やURLを折り返す */
+	 overflow-wrap: break-word; /* 単語の途中で折り返す */
 }
 
 /* 送信ボタン */
@@ -174,3 +179,4 @@ h1:before {
 h1:after {
   bottom: 0;
 }
+
