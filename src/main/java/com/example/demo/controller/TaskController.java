@@ -63,14 +63,24 @@ public class TaskController {
 
 		//合計時間の表示
 		//		List<Task> tasks = taskRepository.findAll();
-
+		int p = 0;
 		int sum = 0;
-
 		for (Task task : taskList) {
-			sum += task.getTime();
+			p = task.getProgress();
+			if (p != 1) {
+				sum += task.getTime();
+			}
+
+			model.addAttribute("sum", sum);
 		}
 
-		model.addAttribute("sum", sum);
+		//		
+		//		
+		//			for (Task task : taskList) {
+		//				sum += task.getTime();
+		//			}
+		//
+		//			model.addAttribute("sum", sum);
 
 		return "task";
 	}
